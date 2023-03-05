@@ -14,11 +14,11 @@ class SubjectView(APIView):
   permission_classes = [IsAuthenticated]
 
   def get(self, request, format=None):
-    subjects = self.getAllSubjects();
+    subjects = SubjectView.getAllSubjects();
     subjectSerializer = SubjectSerializer(subjects, many=True)
     return Response(subjectSerializer.data, status=status.HTTP_200_OK)
 
-  def getAllSubjects(self):
+  def getAllSubjects():
     return Subject.objects.all()      
 
 class SubjectExamView(APIView):
@@ -35,15 +35,18 @@ class SubjectExamView(APIView):
 
     return Response(subjectExamSerializer.data, status=status.HTTP_201_CREATED)
 
-  def getAllSubjectExam():
-    return SubjectExam.objects.all()
+  def getAllSubjectExamByStudentId(studentId):
+    return SubjectExam.objects.filter(student_id=studentId)
 
 class StudentPerformanceView(APIView):
   renderer_classes = [BaseJsonRenderer]
   permission_classes = [IsAuthenticated]
 
   def get(self, request, format=None):
-    subjectExamDataList = SubjectExamView.getAllSubjectExam()
+    subjectExamDataList = SubjectExamView.getAllSubjectExamByStudentId(request.user.id)
+
+    if not subjectExamDataList:
+      return Response({}, status=status.HTTP_201_CREATED)
 
     lowest_exam_score = highest_exam_score = subjectExamDataList[0]
     total_marks = 0
