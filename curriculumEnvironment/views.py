@@ -6,10 +6,8 @@ from curriculumEnvironment.models import Subject, SubjectExam
 from BaseManager.baseRenderers import BaseJsonRenderer
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.conf import settings
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
-import json 
 
 # constant
 GET_ALL_SUBJECTS = "get-all-subjects"

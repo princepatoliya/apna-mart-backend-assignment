@@ -8,7 +8,11 @@ from django.contrib.auth import authenticate
 from BaseManager.baseRenderers import BaseJsonRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from django.conf import settings
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
+GET_USER_PROFILE = 'get-user-profile'
 
 # Create your views here.
 class UserRegistrationView(APIView):
@@ -51,8 +55,14 @@ class UserProfileView(APIView):
   permission_classes = [IsAuthenticated]
 
   def get(self, request, format=None):
-    serializer = UserProfileSerializer(request.user)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if cache.get(f'{GET_USER_PROFILE}-{request.user.id}'):
+        print("user profile from cache....")
+        return Response(cache.get(f'{GET_USER_PROFILE}-{request.user.id}'), status=status.HTTP_200_OK)
+    
+    print("user profile from DB....")
+    profileSerializerData = UserProfileSerializer(request.user).data
+    cache.set(f'{GET_USER_PROFILE}-{request.user.id}', profileSerializerData, settings.CACHE_TTL)
+    return Response(profileSerializerData, status=status.HTTP_200_OK)
 
 
 def get_tokens_for_user(user):
