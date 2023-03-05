@@ -164,4 +164,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Subject Exam Constant
-SUBJECT_EXAM_CRITERIA = 35
+TOTAL_MARK_OF_SUBJECT_EXAM = 100
