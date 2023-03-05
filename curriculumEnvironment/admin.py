@@ -9,8 +9,8 @@ class SubjectModelAdmin(admin.ModelAdmin):
 
 
 class SubjectExamModelAdmin(admin.ModelAdmin):
-  list_display = ('id', 'student_id', 'subject_id', 'marks')
-  search_fields = ('student_id', 'subject_id')
+  list_display = ('id', 'student_id', 'subject_id', 'marks', 'exam_type')
+  search_fields = ('exam_type',)
   ordering = ('id', 'marks')
   
 admin.site.register(Subject, SubjectModelAdmin)

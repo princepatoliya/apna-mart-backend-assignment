@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from curriculumEnvironment.serializers import SubjectSerializer, SubjectExamSerializer
 from curriculumEnvironment.models import Subject
 from BaseManager.baseRenderers import BaseJsonRenderer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 # Create your views here.
 
 
@@ -22,7 +22,7 @@ class SubjectView(APIView):
 
 class SubjectExam(APIView):
   renderer_classes = [BaseJsonRenderer]
-  permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated, IsAdminUser]
 
   def post(self, request, format=None):
     subjectExamData = request.data.get("subjectExamData")
