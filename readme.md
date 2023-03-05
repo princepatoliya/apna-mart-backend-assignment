@@ -28,11 +28,12 @@
 
 ## Redis Cache
 
-- add cache at 3 place
+- add cache at 4 places, For better understating cache time is 10 sec
 
-1. get all subjects from DB
-2. get all subject_exam from DB
-3. on performance API which calculating overall exam report
+1. get profile
+2. get all subjects from DB
+3. get all subject_exam from DB
+4. on performance API which calculating overall exam report
 
 ## API collection
 
