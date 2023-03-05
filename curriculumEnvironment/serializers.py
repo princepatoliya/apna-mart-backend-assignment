@@ -15,6 +15,7 @@ class SubjectExamSerializer(serializers.ModelSerializer):
     model = SubjectExam
     fields = ('student_id', 'subject_id', 'marks', 'exam_type', 'subject_name')
     extra_kwargs= {
-      'student_id': { 'required': False, 'write_only': True },
+      'student_id': { 'required': True },
       'exam_type': { 'required': True }
     }
+
